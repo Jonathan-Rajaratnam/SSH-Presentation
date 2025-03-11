@@ -22,10 +22,10 @@ SSH, or Secure Shell, is a cryptographic network protocol used for secure commun
 
 ### Key Features
 
-- Encrypted communication
-- Authentication
-- Secure file transfer (SCP and SFTP)
-- Tunneling for secure network services
+-   Encrypted communication
+-   Authentication
+-   Secure file transfer (SCP and SFTP)
+-   Tunneling for secure network services
 
 ---
 
@@ -41,18 +41,18 @@ SSH, or Secure Shell, is a cryptographic network protocol used for secure commun
 
 ### Security
 
-- Encrypts data to prevent unauthorized access.
-- Protects against eavesdropping and man-in-the-middle attacks.
+-   Encrypts data to prevent unauthorized access.
+-   Protects against eavesdropping and man-in-the-middle attacks.
 
 ### Authentication
 
-- Supports password-based authentication and public-key cryptography.
-- Two-factor authentication can be implemented for added security.
+-   Supports password-based authentication and public-key cryptography.
+-   Two-factor authentication can be implemented for added security.
 
 ### Remote Access
 
-- Allows users to access remote servers securely.
-- Widely used for remote administration of servers.
+-   Allows users to access remote servers securely.
+-   Widely used for remote administration of servers.
 
 ---
 
@@ -60,24 +60,86 @@ SSH, or Secure Shell, is a cryptographic network protocol used for secure commun
 
 ### How SSH Keys Work
 
-- SSH keys consist of a public key and a private key.
-- The public key is stored on the server, and the private key is kept by the user.
-- Authentication occurs without the need for a password.
+-   SSH keys consist of a public key and a private key.
+-   The public key is stored on the server, and the private key is kept by the user.
+-   Authentication occurs without the need for a password.
 
 ### Benefits
 
-- Increased security: no need to transmit passwords over the network.
-- Convenient and efficient for automated processes.
+-   Increased security: no need to transmit passwords over the network.
+-   Convenient and efficient for automated processes.
 
 ---
 
-## 5. SSH Use Cases and Commands
+## 5. SSH Config File and Use Cases
+
+### What is config file?
+
+-   The config file is a text file that stores SSH Connection and configurations.
+
+-   This is located in ~/.ssh/config
+
+#### **Store connection parameters:**
+
+-   Helps to simplify SSH connections by storing parameters such as usernames, ports and keys.
+
+#### **Setup Alias**
+
+-   Can use to create shprtcut names for hosts where instead of using `ssh username@123.45.67.89`
+    we could use
+    `ssh dev1`
+
+#### **Manages Jump Hosts:**
+
+-   Configure proxy commands or jump host settings
+
+#### **Control TimeOuts:**
+
+-   Set connection timeout and keep-alive parameters
+
+#### **Configures authentication options:**
+
+-   Specify which keys to use for which hosts
+
+#### Example Config File
+
+```bash
+Host *
+    ServerAliveInterval 60
+    ServerAliveCountMax 5
+
+Host myserver
+    HostName example.com
+    User admin
+    Port 2222
+
+
+Host dev5
+   HostName limedev5.linear6.com
+   User ec2-user
+   IdentityFile ~/.ssh/limekeys.pem
+```
+
+### **To connect to a host:**
+
+```
+ssh -i ~/.ssh/limekeys.pem ec2-user@limedev5.linear6.com
+```
+
+-   If the above configuration has been setup in the config file, it can be easily accessed using just `ssh dev5`
+
+---
+
+## 6. SSH Use Cases and Commands
 
 ### Common SSH Use Cases
 
 1. **Remote Server Access:**
-   - Connect to a remote server securely.
 
-   ```bash
-   ssh username@remote-server
+-   Connect to a remote server securely.
 
+```bash
+ssh username@remote-server
+```
+
+---
