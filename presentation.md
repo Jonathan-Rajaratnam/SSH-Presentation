@@ -132,7 +132,8 @@ SSH, or Secure Shell, is a cryptographic network protocol used for secure commun
 
 #### **Setup Alias**
 
--   Can use to create shprtcut names for hosts where instead of using `ssh username@123.45.67.89`
+-   Can use to create shortcut names for hosts where instead of using
+    `ssh username@123.45.67.89`
     we could use
     `ssh dev1`
 
@@ -226,8 +227,12 @@ ssh -i ~/.ssh/limekeys.pem ec2-user@limedev5.linear6.com
     `scp -r user@remote-server:/var/www/backup/ ./local-backup/`
 
 -   **SFTP (SSH File Transfer Protocol) for more interactive file management**
+    <br>
+    <br>
 
     -   SFTP: Interactive file management
+        <br>
+        <br>
 
         ```bash
         sftp user@remote-server
@@ -236,6 +241,7 @@ ssh -i ~/.ssh/limekeys.pem ec2-user@limedev5.linear6.com
         > get important-file.txt
         > put local-file.txt
         > bye
+        >
         ```
 
 -   **Rsync over SSH for efficient file synchronization and backups**
@@ -244,10 +250,14 @@ ssh -i ~/.ssh/limekeys.pem ec2-user@limedev5.linear6.com
 
 -   **Running commands on remote servers without logging in**
 -   **Executing scripts across multiple servers simultaneously**
-
+    <br>
+    <br>
     `ssh user@remote-server "ls -la /var/log"`
-
+    <br>
+    <br>
     `ssh user@remote-server "cat /var/log/log.txt"`
+    <br>
+    <br>
 
 ---
 
@@ -256,8 +266,12 @@ ssh -i ~/.ssh/limekeys.pem ec2-user@limedev5.linear6.com
 -   **Secure authentication for GitHub, GitLab, and other repositories**
 
     -   Clone a repository using SSH. This will be the preferred method when cloning our bitbucket repos
+        <br>
+        <br>
 
     `git clone git@github.com:username/repository.git`
+    <br>
+    <br>
 
 -   **Push/pull operations without password prompts**
 
@@ -266,7 +280,8 @@ ssh -i ~/.ssh/limekeys.pem ec2-user@limedev5.linear6.com
 -   Running graphical applications from remote machines
 
 -   Displaying GUI interfaces locally from remote applications
-
+    <br>
+    <br>
     ` ssh -X user@remote-server xclock`
 
 ---
@@ -281,8 +296,11 @@ ssh -i ~/.ssh/limekeys.pem ec2-user@limedev5.linear6.com
 -   **Local forwarding to access remote services securely**
 
     -   Local forwarding: Access a remote MySQL server locally
-
+        <br>
+        <br>
         `ssh -L 3306:localhost:3306 user@remote-server`
+        <br>
+        <br>
 
 -   **Remote forwarding to expose local services to remote machines**
 -   **Dynamic forwarding to create a SOCKS proxy**
@@ -309,20 +327,85 @@ Telnet is one of the earliest remote login protocols, developed in 1969 as part 
 
 ## Telnet vs SSH Comparison
 
-| Feature                    | SSH                                         | Telnet                                            |
-| -------------------------- | ------------------------------------------- | ------------------------------------------------- |
-| **Encryption**             | All communications encrypted                | No encryption (plaintext)                         |
-| **Authentication**         | Password, public key, certificates, 2FA     | Basic password authentication (sent in plaintext) |
-| **Data Integrity**         | Ensures data integrity                      | No data integrity verification                    |
-| **Default Port**           | 22/TCP                                      | 23/TCP                                            |
-| **Security**               | High                                        | Very low                                          |
-| **Commands**               | `ssh user@host`                             | `telnet host`                                     |
-| **File Transfer**          | Built-in (SCP, SFTP)                        | Not available natively                            |
-| **Port Forwarding**        | Supported                                   | Not supported                                     |
-| **Modern Usage**           | Industry standard                           | Legacy systems only                               |
-| **Year Introduced**        | 1995                                        | 1969                                              |
-| **Protocol**               | Application layer                           | Application layer                                 |
-| **Standardization**        | RFC 4251-4254                               | RFC 854                                           |
-| **Connection Maintenance** | Robust, with keep-alive options             | Basic, prone to timeouts                          |
-| **Additional Features**    | X11 forwarding, agent forwarding, tunneling | Basic terminal emulation only                     |
-| **Cross-platform Support** | Excellent                                   | Limited in modern systems                         |
+<table>
+  <tr>
+    <th>Feature</th>
+    <th>SSH</th>
+    <th>Telnet</th>
+  </tr>
+  <tr>
+    <td><strong>Encryption</strong></td>
+    <td>All communications encrypted</td>
+    <td>No encryption (plaintext)</td>
+  </tr>
+  <tr>
+    <td><strong>Authentication</strong></td>
+    <td>Password, public key, certificates, 2FA</td>
+    <td>Basic password authentication (sent in plaintext)</td>
+  </tr>
+  <tr>
+    <td><strong>Data Integrity</strong></td>
+    <td>Ensures data integrity</td>
+    <td>No data integrity verification</td>
+  </tr>
+  <tr>
+    <td><strong>Default Port</strong></td>
+    <td>22/TCP</td>
+    <td>23/TCP</td>
+  </tr>
+  <tr>
+    <td><strong>Security</strong></td>
+    <td>High</td>
+    <td>Very low</td>
+  </tr>
+  <tr>
+    <td><strong>Commands</strong></td>
+    <td><code>ssh user@host</code></td>
+    <td><code>telnet host</code></td>
+  </tr>
+  <tr>
+    <td><strong>File Transfer</strong></td>
+    <td>Built-in (SCP, SFTP)</td>
+    <td>Not available natively</td>
+  </tr>
+  <tr>
+    <td><strong>Port Forwarding</strong></td>
+    <td>Supported</td>
+    <td>Not supported</td>
+  </tr>
+  <tr>
+    <td><strong>Modern Usage</strong></td>
+    <td>Industry standard</td>
+    <td>Legacy systems only</td>
+  </tr>
+  <tr>
+    <td><strong>Year Introduced</strong></td>
+    <td>1995</td>
+    <td>1969</td>
+  </tr>
+  <tr>
+    <td><strong>Protocol</strong></td>
+    <td>Application layer</td>
+    <td>Application layer</td>
+  </tr>
+  <tr>
+    <td><strong>Standardization</strong></td>
+    <td>RFC 4251-4254</td>
+    <td>RFC 854</td>
+  </tr>
+  <tr>
+    <td><strong>Connection Maintenance</strong></td>
+    <td>Robust, with keep-alive options</td>
+    <td>Basic, prone to timeouts</td>
+  </tr>
+  <tr>
+    <td><strong>Additional Features</strong></td>
+    <td>X11 forwarding, agent forwarding, tunneling</td>
+    <td>Basic terminal emulation only</td>
+  </tr>
+  <tr>
+    <td><strong>Cross-platform Support</strong></td>
+    <td>Excellent</td>
+    <td>Limited in modern systems</td>
+  </tr>
+</table>
