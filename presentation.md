@@ -8,9 +8,9 @@
 2. How SSH Works
 3. Advantages of SSH
 4. SSH Key Authentication
-5. SSH Use Cases and Commands
-6. Comparison with Telnet
-7. Conclusion
+5. SSH Config File and Use Cases
+6. Setting Up SSH
+7. Telnet
 
 ---
 
@@ -66,7 +66,7 @@ SSH, or Secure Shell, is a cryptographic network protocol used for secure commun
 
 ### Benefits
 
--   Increased security: no need to transmit passwords over the network.
+-   Increased security: No need to transmit passwords over the network.
 -   Convenient and efficient for automated processes.
 
 ---
@@ -101,7 +101,9 @@ SSH, or Secure Shell, is a cryptographic network protocol used for secure commun
 
 -   Specify which keys to use for which hosts
 
-#### Example Config File
+---
+
+### Example Config File
 
 ```bash
 Host *
@@ -114,8 +116,8 @@ Host myserver
     Port 2222
 
 
-Host dev5
-   HostName limedev5.linear6.com
+Host dev3
+   HostName limedev3.linear6.com
    User ec2-user
    IdentityFile ~/.ssh/limekeys.pem
 ```
@@ -130,16 +132,150 @@ ssh -i ~/.ssh/limekeys.pem ec2-user@limedev5.linear6.com
 
 ---
 
-## 6. SSH Use Cases and Commands
+## 6. Setting Up SSH
 
-### Common SSH Use Cases
+### 1. **Check For SSH Folder**
 
-1. **Remote Server Access:**
+-   Check if .ssh folder exists in home directory.
 
--   Connect to a remote server securely.
+-   Open Terminal and try `cd .ssh`
 
-```bash
-ssh username@remote-server
-```
+-   If Folder doesn't exist then create it with `mkdir .ssh` and then `cd .ssh`
+
+### 2. Creating Config File
+
+-   Using any text editor of choice or using vscode `code .`
+
+-   Create a new file as `config`
+
+-   Copy the host configurations
+
+-   Make sure that the key files are present `limekeys.pem`
+
+### 3. Test Connection
+
+-   We can test our ssh connection using full ssh method
+
+    -   `ssh -t -i ~/.ssh/limekeys.pem ec2-user@limedev3.linear6.com`
+
+-   Using config file alias
+
+    -   `ssh dev3`
 
 ---
+
+## 7. Other Uses of SSH
+
+### **Secure File Transfers:**
+
+-   **SCP (Secure Copy) for simple file transfers**
+
+    -   SCP: Copy a file to a remote server
+
+    `scp document.pdf user@remote-server:/home/user/documents/`
+
+    -   SCP: Copy a directory recursively from a remote server
+
+    `scp -r user@remote-server:/var/www/backup/ ./local-backup/`
+
+-   **SFTP (SSH File Transfer Protocol) for more interactive file management**
+
+    -   SFTP: Interactive file management
+
+        ```bash
+        sftp user@remote-server
+        > cd /var/www
+        > ls -la
+        > get important-file.txt
+        > put local-file.txt
+        > bye
+        ```
+
+-   **Rsync over SSH for efficient file synchronization and backups**
+
+### **Remote Code Execution:**
+
+-   **Running commands on remote servers without logging in**
+-   **Executing scripts across multiple servers simultaneously**
+
+    `ssh user@remote-server "ls -la /var/log"`
+
+    `ssh user@remote-server "cat /var/log/log.txt"`
+
+---
+
+### **Git Operations:**
+
+-   **Secure authentication for GitHub, GitLab, and other repositories**
+
+    -   Clone a repository using SSH. This will be the preferred method when cloning our bitbucket repos
+
+    `git clone git@github.com:username/repository.git`
+
+-   **Push/pull operations without password prompts**
+
+### **X11 Forwarding:**
+
+-   Running graphical applications from remote machines
+
+-   Displaying GUI interfaces locally from remote applications
+
+    ` ssh -X user@remote-server xclock`
+
+---
+
+### **VPN Alternative:**
+
+-   **Creating encrypted tunnels for secure browsing**
+-   **Accessing internal networks securely from external locations**
+
+### **Port Forwarding:**
+
+-   **Local forwarding to access remote services securely**
+
+    -   Local forwarding: Access a remote MySQL server locally
+
+        `ssh -L 3306:localhost:3306 user@remote-server`
+
+-   **Remote forwarding to expose local services to remote machines**
+-   **Dynamic forwarding to create a SOCKS proxy**
+
+### **Jump Hosts / Bastion Servers:**
+
+-   Using intermediate servers to access protected networks
+-   Controlling access to infrastructure through a single point
+
+---
+
+## 8. Telnet Overview
+
+Telnet is one of the earliest remote login protocols, developed in 1969 as part of the ARPANET project. It stands for "TELecommunication NETwork" and provides a text-based interface for interacting with remote computers.
+
+### Key Points About Telnet:
+
+-   Transmits all data (including usernames and passwords) in plaintext
+-   Operates on TCP port 23 by default
+-   No built-in encryption or strong authentication mechanisms
+-   Was widely used before security became a major concern
+-   Still used occasionally for specific networking diagnostics and internal/isolated networks
+-   Now considered insecure for most modern applications
+
+## Telnet vs SSH Comparison
+
+| Feature                    | SSH                                         | Telnet                                            |
+| -------------------------- | ------------------------------------------- | ------------------------------------------------- |
+| **Encryption**             | All communications encrypted                | No encryption (plaintext)                         |
+| **Authentication**         | Password, public key, certificates, 2FA     | Basic password authentication (sent in plaintext) |
+| **Data Integrity**         | Ensures data integrity                      | No data integrity verification                    |
+| **Default Port**           | 22/TCP                                      | 23/TCP                                            |
+| **Security**               | High                                        | Very low                                          |
+| **Commands**               | `ssh user@host`                             | `telnet host`                                     |
+| **File Transfer**          | Built-in (SCP, SFTP)                        | Not available natively                            |
+| **Port Forwarding**        | Supported                                   | Not supported                                     |
+| **Modern Usage**           | Industry standard                           | Legacy systems only                               |
+| **Year Introduced**        | 1995                                        | 1969                                              |
+| **Protocol**               | Application layer                           | Application layer                                 |
+| **Standardization**        | RFC 4251-4254                               | RFC 854                                           |
+| **Connection Maintenance** | Robust, with keep-alive options             | Basic, prone to timeouts                          |
+| **Additional Features**    | X11 forwarding, agent forwarding, tunneling | Basic terminal emulation only                     |
+| **Cross-platform Support** | Excellent                                   | Limited in modern systems                         |
