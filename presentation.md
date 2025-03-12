@@ -54,6 +54,22 @@ SSH, or Secure Shell, is a cryptographic network protocol used for secure commun
 -   Allows users to access remote servers securely.
 -   Widely used for remote administration of servers.
 
+### Flexibility
+
+-   Can tunnel other protocols through SSH connections.
+-   Supports port forwarding and SOCKS proxying.
+
+### Wide Support
+
+-   Built into most operating systems (Linux, macOS).
+-   Available for Windows through various clients.
+-   Industry standard with extensive documentation.
+
+### Efficiency
+
+-   Connection sharing allows multiple sessions over a single connection.
+-   Compression options for improved performance over slow networks.
+
 ---
 
 ## 4. SSH Key Authentication
@@ -61,13 +77,44 @@ SSH, or Secure Shell, is a cryptographic network protocol used for secure commun
 ### How SSH Keys Work
 
 -   SSH keys consist of a public key and a private key.
+
 -   The public key is stored on the server, and the private key is kept by the user.
+
 -   Authentication occurs without the need for a password.
+
+-   Keys use asymmetric encryption (typically RSA, Ed25519, or ECDSA).
+
+### Key Generation
+
+-   Created using `ssh-keygen` command:
+
+    ```bash
+    ssh-keygen -t ed25519 -C "your_email@example.com"
+    ```
+
+-   Keys are typically stored in the ~/.ssh directory.
 
 ### Benefits
 
 -   Increased security: No need to transmit passwords over the network.
+
 -   Convenient and efficient for automated processes.
+
+-   Protection against brute force attacks.
+
+-   Single key can be used across multiple servers.
+
+-   Can implement passphrase protection for additional security.
+
+### Best Practices
+
+-   Keep private keys secure and never share them.
+
+-   Use strong passphrases for private keys.
+
+-   Consider using ssh-agent to manage passphrases.
+
+-   Regularly audit and rotate keys when necessary.
 
 ---
 
